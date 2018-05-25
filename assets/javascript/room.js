@@ -1,6 +1,7 @@
 var commands = {
-    '$("#message-history").empty()': ["clear", "clear screen", "empty"],
-    'emptyDatabase()': ["emptydb"]
+    "clearchat":'$("#message-history").empty()',
+    "emptydb": 'emptyDatabase()',
+    "play":`callAPI($("#video-row"),${argument})`
 }
 
 var config = {
@@ -58,11 +59,10 @@ $(document).ready(function () {
         var message = `${inputElement.val()}`;
         if (message[0] == "/") {
             message = message.substring(1, message.length).toLowerCase();
-            var command = null;
+            command = message.split(" ");
             Object.keys(commands).find(command => {
-                var isIncluded = commands[command].includes(message);
-                if (isIncluded) {
-                    eval(command);
+                if (command in commands) {
+                    eval(commands[command]);
                 }
             });
 

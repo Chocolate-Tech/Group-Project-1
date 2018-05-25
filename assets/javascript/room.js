@@ -1,5 +1,6 @@
 var commands = {
-    
+    '$("#message-history").empty()': ["clear", "clear screen", "empty"],
+    'emptyDatabase()': ["emptydb"]
 }
 
 var config = {
@@ -23,10 +24,14 @@ $(document).ready(function () {
 
     $("#clear-messages").on("mouseup", function (event) {
         if (event.which == 1) {
-            database.ref("/messages").remove();
-            $("#message-history").empty();
+            emptyDatabase();
         }
     });
+
+    function emptyDatabase() {
+        database.ref("/messages").remove();
+        $("#message-history").empty();
+    }
 
     $("#message-text").on("keydown", function (event) {
         var pressedKey = event.key.toLowerCase();
@@ -51,12 +56,17 @@ $(document).ready(function () {
 
     function sendMessage(inputElement) {
         var message = `${inputElement.val()}`;
-        if (message[0] == "/")
-        {
-            message = message.substring(1, message.length);
-            eval(`$("#message-history").${message}()`);
-        }
-        else if (message !== '') {
+        if (message[0] == "/") {
+            message = message.substring(1, message.length).toLowerCase();
+            var command = null;
+            Object.keys(commands).find(command => {
+                var isIncluded = commands[command].includes(message);
+                if (isIncluded) {
+                    eval(command);
+                }
+            });
+
+        } else if (message !== '') {
             database.ref("/messages").push(inputElement.val());
         }
         inputElement.val("");

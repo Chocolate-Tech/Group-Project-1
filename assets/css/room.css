@@ -6,7 +6,7 @@
 }
 #message-history{
     height: 70%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 #type-message{
     height: 20%;

@@ -1,0 +1,17 @@
+.container{
+    height: 700px;
+}
+#chat-row{
+    height: 40%;
+}
+#message-history{
+    height: 70%;
+    overflow-y: auto;
+}
+#type-message{
+    height: 20%;
+}
+#chat-row > .row{
+    border: 4px solid black;
+    padding: 0px 5px;
+}

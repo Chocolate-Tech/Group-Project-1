@@ -1,0 +1,89 @@
+﻿html, body {
+	height:100%;
+	width:100%;
+}
+
+.navbar {
+	background-color:#23415C;
+	padding:10spx;
+	font-size:1.2em;
+}
+.container
+.navbar-brand {
+	min-height: 55px;
+	padding: 0;
+}
+
+.navbar-default .navbar-nav li a {
+	color: white;
+}
+
+.navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a.active {
+	color:#255099;
+}
+
+#home {
+	background:url(../assets/img/websitebackground.jpg) no-repeat center center fixed;
+	display:table;
+	height:100%;
+	position:relative;
+	width:100%;
+	background-size:cover 
+}
+
+.landing-text {
+	display:table-cell;
+	text-align:center;
+	vertical-align: middle;
+}
+
+.landing-text h1 {
+	font-size:500%;
+	font-weight:700;
+}
+
+.padding {
+	padding: 80px 0;
+}
+
+.padding img {
+	width:100%;
+}
+
+#fixed {
+	background:url(../assets/img/lofibackground.jpg) no-repeat center center fixed;
+	display:table;
+	height:60%;
+	position:relative;
+	width:100%;
+	background-size:cover;
+}
+
+footer {
+	width:100%;
+	background-color:#23415C;
+}
+
+.fa {
+	padding:15px;
+	font-size:25px;
+	color: #FFF;
+}
+
+h8 {
+	color:white;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

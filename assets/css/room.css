@@ -2,7 +2,7 @@
     height: 700px;
 }
 #chat-row{
-    height: 40%;
+    margin: 0px;
 }
 #message-history{
     height: 100px;

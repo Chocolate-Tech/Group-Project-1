@@ -1,8 +1,3 @@
-var commands = {
-    '$("#message-history").empty()': ["clear", "clear screen", "empty"],
-    'emptyDatabase()': ["emptydb"]
-}
-
 var config = {
     apiKey: "AIzaSyBfN9DxXyD8bz01rlMmBrEI-SFI3ZnrP8s",
     authDomain: "bootcamp-group-project-one.firebaseapp.com",
@@ -15,7 +10,24 @@ firebase.initializeApp(config);
 
 database = firebase.database();
 
+var loggedInUsername = "";
+
 $(document).ready(function () {
+    var argument;
+
+    var commands = {
+        "clearchat": function () {
+            $("#message-history").empty()
+        },
+        "emptydb": function () {
+            emptyDatabase()
+        },
+        "play": function (argument) {
+            callAPI($("#video-row"), argument);
+        }
+    }
+
+
     $("#send-message-button").on("mouseup", function (event) {
         if (event.which == 1) {
             sendMessage($("#message-text"));
@@ -58,16 +70,20 @@ $(document).ready(function () {
         var message = `${inputElement.val()}`;
         if (message[0] == "/") {
             message = message.substring(1, message.length).toLowerCase();
-            var command = null;
-            Object.keys(commands).find(command => {
-                var isIncluded = commands[command].includes(message);
-                if (isIncluded) {
-                    eval(command);
+            var commandArguments = message.split(" ");
+            command = commandArguments[0];
+
+            if (commandArguments > 1) {
+                argument = commandArguments[1];
+            }
+            Object.keys(commands).find(commandKey => {
+                if (commandKey in commands && commandKey == command) {
+                    commands[commandKey](argument);
                 }
             });
 
         } else if (message !== '') {
-            database.ref("/messages").push(inputElement.val());
+            database.ref("/messages").push(`${loggedInUsername}: ${inputElement.val()}`);
         }
         inputElement.val("");
     }
@@ -77,4 +93,52 @@ $(document).ready(function () {
         newDiv.text(message);
         $("#message-history").append(newDiv);
     }
+
+    $("#login-button").on("click", function (event) {
+        var account = {
+            username: $("#login-username").val(),
+            password: $("#login-password").val()
+        }
+        var ref = firebase.database().ref("/accounts");
+
+        var doesExist = false;
+
+        ref.once('value', function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+                if (childData.username == account.username &&
+                    childData.password == account.password) {
+                    loggedInUsername = childData.username;
+                }
+            });
+        });
+
+        console.log("success");
+    });
+
+    $("#register-button").on("click", function (event) {
+        var account = {
+            username: $("#register-username").val(),
+            password: $("#register-password").val()
+        }
+
+        var ref = firebase.database().ref("/accounts");
+
+        ref.once('value', function (snapshot) {
+            var doesExist = false;
+            snapshot.forEach(function (childSnapshot) {
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+                console.log(childData);
+                if (childData.username == account.username) {
+                    doesExist = true;
+                }
+            });
+            if (!doesExist) {
+                ref.push(account);
+            }
+
+        });
+    });
 });

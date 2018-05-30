@@ -5,13 +5,34 @@
     height: 40%;
 }
 #message-history{
-    height: 70%;
+    height: 100px;
     overflow-y: auto;
+    width: 800px;
 }
 #type-message{
-    height: 20%;
+
 }
+
+#main-box{
+    padding: 0;
+}
+
+#clear-messages{
+    margin-top: 30%;
+    margin-bottom: 30%;
+    overflow-wrap: normal;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#video-row{
+    margin: auto;
+}
+
 #chat-row > .row{
-    border: 4px solid black;
-    padding: 0px 5px;
+
+}
+
+#form-group {
+    margin: auto
 }

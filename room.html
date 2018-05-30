@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/room.css">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
@@ -16,23 +17,59 @@
 
 <body>
     <div class="container">
-        <div class="row" id="video-row">
 
-        </div>
-        <div class="row" id="chat-row">
-            <div class="row" id="message-history"></div>
-            <br>
-            <div class="row" id="type-message">
-                <input class="col s10" type="text" id="message-text">
-                <button id="send-message-button">Send Message</button>
+
+
+        <div class="row">
+            <div class="card bg-light mb-3 col-12" id="main-box">
+
+                <div class="row" id="video-row">
+                    <iframe width="854" height="480" src="https://www.youtube.com/embed/SFphlZ_BryA" frameborder="0" allow="autoplay; encrypted-media"
+                        allowfullscreen></iframe>
+                </div>
+                <br>
+                <div class="card-header">Chat</div>
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-10 form-group card">
+                            <div id="chat-row" class="card-body">
+                                <div id="message-history">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-2 form-group">
+                            <button id="clear-messages" class="btn btn-primary">Clear
+                                <br>Messages</button>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class=" col-11 input-group mb-3" id="type-message">
+                            <input class=" form-control" type="text" id="message-text">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary rounded-right" id="send-message-button">Send Message</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-            <button id="clear-messages">Clear Message Database</button>
         </div>
-    </div>
 
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
     <script src="assets/javascript/room.js"></script>
     <script src="assets/javascript/javascript.js"></script>
 

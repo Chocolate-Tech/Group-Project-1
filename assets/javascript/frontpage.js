@@ -80,7 +80,7 @@ function makeRoom(username) {
     if (username != null && typeof (username) != "undefined") {
         var initialRoomData = {
             host: username,
-            url: "https://www.youtube.com/embed/4umiOnu3wuk"
+            url: ""
         }
         var newRoom = database.ref("/rooms").push(initialRoomData);
         return newRoom.key;

@@ -11,13 +11,71 @@ firebase.initializeApp(config);
 database = firebase.database();
 
 $(document).ready(function () {
-    $("#create-lobby-button").on("mousedown", function (event) {
+    $("#lobbyButton").on("mousedown", function (event) {
         var roomKey = makeRoom(localStorage.getItem("username"));
         if (roomKey != null)
             window.location.href = `../room.html?${roomKey}`;
         else {
             console.log("!Error, make message for user!");
         }
+    });
+    $("#login-button").on("click", function (event) {
+        event.preventDefault();
+        var account = {
+            username: $("#username-input").val(),
+            password: $("#password-input").val()
+        }
+        var ref = firebase.database().ref("/accounts");
+
+        var doesExist = false;
+
+        ref.once('value', function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+                if (childData.username == account.username &&
+                    childData.password == account.password) {
+                    loggedInUsername = childData.username;
+                    storeUsername(account.username);
+                    doesExist = true;
+                }
+            });
+        });
+
+        if (!doesExist) {
+            $("#serverResponse").text("That username/password is incorrect!");
+        } 
+
+
+    });
+
+    $("#register-button").on("click", function (event) {
+        event.preventDefault();
+        var account = {
+            username: $("#username-input").val(),
+            password: $("#password-input").val()
+        }
+
+        var ref = firebase.database().ref("/accounts");
+
+        ref.once('value', function (snapshot) {
+            var doesExist = false;
+            snapshot.forEach(function (childSnapshot) {
+                var childKey = childSnapshot.key;
+                var childData = childSnapshot.val();
+                if (childData.username == account.username) {
+                    doesExist = true;
+                }
+            });
+            if (!doesExist) {
+                ref.push(account);
+                $("#serverResponse").text("You have successfully registered! ")
+            } else {
+                $("#serverResponse").text(`The username "${account.username}" is already taken.`)
+            }
+
+        });
+        storeUsername(account.username);
     });
 });
 
@@ -31,4 +89,10 @@ function makeRoom(username) {
         return newRoom.key;
     }
     return null;
+}
+
+
+function storeUsername(username) {
+    localStorage.setItem("username", username);
+    window.location.replace("frontpage.html");
 }

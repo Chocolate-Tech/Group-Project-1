@@ -4,7 +4,7 @@
 }
 
 .navbar {
-	background-color:#23415C;
+	background-color:white;
 	padding:10spx;
 	font-size:1.2em;
 }
@@ -15,26 +15,44 @@
 }
 
 .navbar-default .navbar-nav li a {
-	color: white;
+	color: black;
 }
 
 .navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a.active {
-	color:#255099;
+	color:red;
 }
 
-#home {
-	background:url(../assets/img/websitebackground.jpg) no-repeat center center fixed;
+.home {
 	display:table;
 	height:100%;
-	position:relative;
 	width:100%;
-	background-size:cover 
+	background-size:cover;
+	z-index: 0;
+	margin:auto;
+}
+
+#fire {
+	position:relative;
+	z-index: -1;
+}
+
+.btn btn-default btn-lg {
+	margin-left: 100px;
 }
 
 .landing-text {
-	display:table-cell;
-	text-align:center;
-	vertical-align: middle;
+	position: absolute;
+    top: 50%;
+    left: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+}
+
+.findLobby {
+	position: relative;
+	top: 50%;
+	left: 50%;
+
 }
 
 .landing-text h1 {
@@ -74,7 +92,9 @@ h8 {
 	color:white;
 }
 
-
+#search-area {
+	margin-right: 30%;
+}
 
 
 

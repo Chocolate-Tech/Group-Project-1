@@ -28,7 +28,7 @@ $(document).ready(function () {
                 vidElement.attr("frameborder", "0");
                 vidElement.attr("allow", "encrypted-media");
                 vidElement.attr("allowfullscreen", "");
-                $("#video-row").append(vidElement);
+                appendToElement.append(vidElement);
             };
             
         

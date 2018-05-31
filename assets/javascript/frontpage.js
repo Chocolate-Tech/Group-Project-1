@@ -6,12 +6,19 @@ var config = {
     storageBucket: "bootcamp-group-project-one.appspot.com",
     messagingSenderId: "1015568709056"
 };
-
 firebase.initializeApp(config);
 
 database = firebase.database();
 
 $(document).ready(function () {
+    $("#lobbyButton").on("mousedown", function (event) {
+        var roomKey = makeRoom(localStorage.getItem("username"));
+        if (roomKey != null)
+            window.location.href = `../room.html?${roomKey}`;
+        else {
+            console.log("!Error, make message for user!");
+        }
+    });
     $("#login-button").on("click", function (event) {
         event.preventDefault();
         var account = {
@@ -70,8 +77,20 @@ $(document).ready(function () {
         });
         storeUsername(account.username);
     });
-
 });
+
+function makeRoom(username) {
+    if (username != null && typeof (username) != "undefined") {
+        var initialRoomData = {
+            host: username,
+            url: "https://www.youtube.com/embed/4umiOnu3wuk"
+        }
+        var newRoom = database.ref("/rooms").push(initialRoomData);
+        return newRoom.key;
+    }
+    return null;
+}
+
 
 function storeUsername(username) {
     localStorage.setItem("username", username);

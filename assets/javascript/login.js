@@ -6,6 +6,7 @@ var config = {
     storageBucket: "bootcamp-group-project-one.appspot.com",
     messagingSenderId: "1015568709056"
 };
+
 firebase.initializeApp(config);
 
 database = firebase.database();
@@ -28,12 +29,17 @@ $(document).ready(function () {
                 if (childData.username == account.username &&
                     childData.password == account.password) {
                     loggedInUsername = childData.username;
+                    storeUsername(account.username);
+                    doesExist = true;
                 }
             });
         });
-        storeUsername(account.username);
 
-        
+        if (!doesExist) {
+            $("#serverResponse").text("That username/password is incorrect!");
+        } 
+
+
     });
 
     $("#register-button").on("click", function (event) {
@@ -67,8 +73,7 @@ $(document).ready(function () {
 
 });
 
-function storeUsername (username) {
+function storeUsername(username) {
     localStorage.setItem("username", username);
     window.location.replace("frontpage.html");
 }
-

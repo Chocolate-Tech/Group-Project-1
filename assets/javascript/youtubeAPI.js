@@ -7,17 +7,17 @@ $(document).ready(function () {
 
     $("#displayVidNumSubmitButton").on("click", function () {
         resultsNum = $("#vidNumBox").val();
-        callAPI();
+        callAPI($("#video-row"), queryURL);
     });
 
 
     $("#searchWordSubmitButton").on("click", function () {
         searchWord = $("#searchWordBox").val();
-        callAPI();
+        callAPI($("#video-row"), queryURL);
     });
 
 
-    function callAPI() {
+    function callAPI(appendToElement, queryURL) {
         queryURL += "?" + $.param({
             "key": apiKey,
             "maxResults": resultsNum,
@@ -41,7 +41,7 @@ $(document).ready(function () {
                 vidElement.attr("frameborder", "0");
                 vidElement.attr("allow", "encrypted-media");
                 vidElement.attr("allowfullscreen", "");
-                $("#video-row").append(vidElement);
+                appendToElement.append(vidElement);
             };
             
         

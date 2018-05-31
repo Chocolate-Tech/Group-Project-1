@@ -77,4 +77,3 @@ function storeUsername(username) {
     localStorage.setItem("username", username);
     window.location.replace("frontpage.html");
 }
-

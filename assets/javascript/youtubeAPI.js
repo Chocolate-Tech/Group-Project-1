@@ -4,20 +4,7 @@ $(document).ready(function () {
     var searchWord = "football";
     var queryURL = "https://www.googleapis.com/youtube/v3/search";
 
-
-    $("#displayVidNumSubmitButton").on("click", function () {
-        resultsNum = $("#vidNumBox").val();
-        callAPI();
-    });
-
-
-    $("#searchWordSubmitButton").on("click", function () {
-        searchWord = $("#searchWordBox").val();
-        callAPI();
-    });
-
-
-    function callAPI() {
+    function callYouTubeAPI() {
         queryURL += "?" + $.param({
             "key": apiKey,
             "maxResults": resultsNum,

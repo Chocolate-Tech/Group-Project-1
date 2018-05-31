@@ -28,7 +28,22 @@ database.ref("/rooms").once('value', function (snapshot) {
 function loadData(roomData) {
     $(document).ready(function () {
 
-        $("#video-row > iframe").attr("src", roomData.url)
+        $("#search-button").on("click", function(event){
+            console.log($("#Searchword").val());
+            var searchWord = $("#Searchword").val();
+            var videoPreview = $("#video-preview");
+            callYouTubeAPI(searchWord,videoPreview);
+        });
+
+        $("#video-preview").on("click", ".thumbnail-preview", function() {
+            var videoId = $(this).attr("video-id");
+            roomData.url = "https://www.youtube.com/embed/" + videoId;
+            $("#video-row > iframe").attr("src", roomData.url);
+            $("#video-preview").empty();
+            $("#collapseExample").removeClass("show");
+        });
+
+        $("#video-row > iframe").attr("src", roomData.url);
 
         var messagesRef = database.ref(`/rooms/-${roomKey}/messages`);
 

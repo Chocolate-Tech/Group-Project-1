@@ -24,13 +24,11 @@ $(document).ready(function () {
 function makeRoom(username) {
     if (username != null && typeof (username) != "undefined") {
         var initialRoomData = {
-            host: username
+            host: username,
+            url: "https://www.youtube.com/embed/4umiOnu3wuk"
         }
-        var ref = firebase.database().ref("/rooms");
-        ref.push(initialRoomData).then((snap) => {
-            return snap.key;
-        });
-        return null;
+        var newRoom = database.ref("/rooms").push(initialRoomData);
+        return newRoom.key;
     }
     return null;
 }

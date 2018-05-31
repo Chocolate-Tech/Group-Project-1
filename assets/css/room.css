@@ -1,23 +1,21 @@
-.container{
+.container {
     height: 700px;
 }
-#chat-row{
+
+#chat-row {
     margin: 0px;
 }
-#message-history{
-    height: 100px;
+
+#message-history {
     overflow-y: auto;
-    width: 800px;
-}
-#type-message{
-
+    height: 30%;
 }
 
-#main-box{
+#main-box {
     padding: 0;
 }
 
-#clear-messages{
+#clear-messages {
     margin-top: 30%;
     margin-bottom: 30%;
     overflow-wrap: normal;
@@ -25,12 +23,9 @@
     padding-bottom: 20px;
 }
 
-#video-row{
+#video-row {
     margin: auto;
-}
-
-#chat-row > .row{
-
+    width: 80%;
 }
 
 #form-group {

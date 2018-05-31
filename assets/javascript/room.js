@@ -14,21 +14,23 @@ var loggedInUsername = "";
 var storedUserName = localStorage.getItem("username");
 
 var currentUrl = window.location.href;
-var start = currentUrl.lastIndexOf("index.html?") + 11;
-var roomKey = currentUrl.substring(start, currentUrl.length - start);
-var roomData = database.ref("/rooms").once('value', function (snapshot) {
+var start = currentUrl.lastIndexOf("room.html?") + 11;
+var roomKey = currentUrl.substring(start, currentUrl.length);
+database.ref("/rooms").once('value', function (snapshot) {
     snapshot.forEach(function (childSnapshot) {
         var childKey = childSnapshot.key;
-        if (childKey == roomKey) {
-            return childSnapshot.val();
+        if (childKey == `-${roomKey}`) {
+            loadData(childSnapshot.val());
         }
     });
-    return null;
 });
-if (roomData != null) {
+
+function loadData(roomData) {
     $(document).ready(function () {
 
-        $("#video-row > iframe").attr("src", );
+        $("#video-row > iframe").attr("src", roomData.url)
+
+        var messagesRef = database.ref(`/rooms/-${roomKey}/messages`);
 
         if (typeof (storedUserName) != "undefined" && storedUserName != null) {
             loggedInUsername = storedUserName;
@@ -65,7 +67,7 @@ if (roomData != null) {
         });
 
         function emptyDatabase() {
-            database.ref("/messages").remove();
+            messagesRef.remove();
             $("#message-history").empty();
         }
 
@@ -76,14 +78,14 @@ if (roomData != null) {
             }
         });
 
-        database.ref("/messages").once("value", function (snapshot) {
+        messagesRef.once("value", function (snapshot) {
             if (snapshot.val() !== null) {
 
                 var myObj = snapshot.val();
                 var lastKeyInMessages = Object.keys(myObj)[Object.keys(myObj).length - 1];
                 Object.keys(myObj).forEach(key => key != lastKeyInMessages ? updateMessageHistory(myObj[key]) : {});
             }
-            database.ref("/messages").limitToLast(1).on("child_added", function (snapshot) {
+            messagesRef.limitToLast(1).on("child_added", function (snapshot) {
                 updateMessageHistory(snapshot.val());
             }, function (error) {
 
@@ -107,7 +109,7 @@ if (roomData != null) {
                 });
 
             } else if (message !== '') {
-                database.ref("/messages").push(`${loggedInUsername}: ${inputElement.val()}`);
+                messagesRef.push(`${loggedInUsername}: ${inputElement.val()}`);
             }
             inputElement.val("");
         }

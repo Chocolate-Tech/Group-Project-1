@@ -11,8 +11,18 @@ firebase.initializeApp(config);
 database = firebase.database();
 
 var loggedInUsername = "";
+var storedUserName = sessionStorage.getItem("username");
 
 $(document).ready(function () {
+
+    if (typeof(storedUserName) != "undefined" && storedUserName != null){
+        loggedInUsername = storedUserName;
+    }
+    else{
+        $("#send-message-button").attr("disabled", "");
+        $("#message-text").attr("disabled", "");
+    }
+
     var argument;
 
     var commands = {
@@ -93,52 +103,4 @@ $(document).ready(function () {
         newDiv.text(message);
         $("#message-history").append(newDiv);
     }
-
-    $("#login-button").on("click", function (event) {
-        var account = {
-            username: $("#login-username").val(),
-            password: $("#login-password").val()
-        }
-        var ref = firebase.database().ref("/accounts");
-
-        var doesExist = false;
-
-        ref.once('value', function (snapshot) {
-            snapshot.forEach(function (childSnapshot) {
-                var childKey = childSnapshot.key;
-                var childData = childSnapshot.val();
-                if (childData.username == account.username &&
-                    childData.password == account.password) {
-                    loggedInUsername = childData.username;
-                }
-            });
-        });
-
-        console.log("success");
-    });
-
-    $("#register-button").on("click", function (event) {
-        var account = {
-            username: $("#register-username").val(),
-            password: $("#register-password").val()
-        }
-
-        var ref = firebase.database().ref("/accounts");
-
-        ref.once('value', function (snapshot) {
-            var doesExist = false;
-            snapshot.forEach(function (childSnapshot) {
-                var childKey = childSnapshot.key;
-                var childData = childSnapshot.val();
-                console.log(childData);
-                if (childData.username == account.username) {
-                    doesExist = true;
-                }
-            });
-            if (!doesExist) {
-                ref.push(account);
-            }
-
-        });
-    });
 });

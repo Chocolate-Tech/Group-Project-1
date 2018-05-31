@@ -11,7 +11,7 @@ firebase.initializeApp(config);
 database = firebase.database();
 
 var loggedInUsername = "";
-var storedUserName = sessionStorage.getItem("username");
+var storedUserName = localStorage.getItem("username");
 
 $(document).ready(function () {
 

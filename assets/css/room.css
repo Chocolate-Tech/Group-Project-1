@@ -28,6 +28,10 @@
     width: 80%;
 }
 
+#video-preview {
+    width: 100%;
+}
+
 #form-group {
     margin: auto
 }

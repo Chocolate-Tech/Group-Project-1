@@ -2,7 +2,7 @@ var queryTwitchURL = "https://api.twitch.tv/kraken/search/streams";
 var clientID = "vpbsez8qfdzsizxzc6f7hft18wsqya";
 var limitResultsNum = 9;
 
-function callTwtichAPI(searchWordTwitch, appendToElement) {
+function callTwitchAPI(searchWordTwitch, appendToElement) {
     queryTwitchURL += "?" + $.param({
         "client_id": clientID,
         "limit": limitResultsNum,

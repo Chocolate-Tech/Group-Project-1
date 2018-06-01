@@ -15,7 +15,7 @@ var storedUserName = localStorage.getItem("username");
 
 var currentUrl = window.location.href;
 var start = currentUrl.lastIndexOf("room.html?") + 11;
-var roomKey = currentUrl.substring(start, currentUrl.length);
+var roomKey = currentUrl.substring(start, start + 19);
 database.ref("/rooms").once('value', function (snapshot) {
     snapshot.forEach(function (childSnapshot) {
         var childKey = childSnapshot.key;
@@ -28,22 +28,71 @@ database.ref("/rooms").once('value', function (snapshot) {
 function loadData(roomData) {
     $(document).ready(function () {
 
-        $("#search-button").on("click", function(event){
-            console.log($("#Searchword").val());
-            var searchWord = $("#Searchword").val();
-            var videoPreview = $("#video-preview");
-            callYouTubeAPI(searchWord,videoPreview);
+        $(window).bind('beforeunload', function () {
+            var ref = database.ref(`/rooms/-${roomKey}`);
+            var hostLeft = false;
+            ref.once("value", function (snapshot) {
+                if (snapshot.val().host == localStorage.getItem("username")) {
+                    hostLeft = true;
+                }
+            });
+            if (hostLeft){
+                ref.remove();
+            }
         });
 
-        $("#video-preview").on("click", ".thumbnail-preview", function() {
-            var videoId = $(this).attr("video-id");
-            roomData.url = "https://www.youtube.com/embed/" + videoId;
+        $("#dropdown-section > div").on("click", "a", function () {
+            $("#dropdown-section > button").text($(this).text());
+        });
+
+        $("#search-button").on("click", function () {
+            if (!$("#collapseExample").hasClass("show")) {
+                searchFunction();
+            } else {
+                $("#video-preview").empty();
+            }
+        });
+
+        $("#Searchword").on("keydown", function (event) {
+            var pressedKey = event.key.toLowerCase();
+            if (pressedKey == "enter") {
+                $("#collapseExample").addClass("show");
+                searchFunction();
+            }
+        });
+
+        function searchFunction() {
+            $("#video-preview").empty();
+            var searchWord = $("#Searchword").val();
+            var videoPreview = $("#video-preview");
+            if ($("#dropdown-section > button").text() == "YouTube Videos")
+                callYouTubeAPI(searchWord, videoPreview);
+            else
+                callTwitchAPI(searchWord, videoPreview);
+        }
+
+        $("#video-preview").on("click", ".thumbnail-preview", function () {
+
+            if ($("#dropdown-section > button").text() == "YouTube Videos") {
+                var videoId = $(this).attr("video-id");
+                roomData.url = "https://www.youtube.com/embed/" + videoId;
+            } else {
+                var videoUrl = $(this).attr("video-url");
+                roomData.url = videoUrl;
+            }
+
+            database.ref(`/rooms/-${roomKey}`).set(roomData);
             $("#video-row > iframe").attr("src", roomData.url);
             $("#video-preview").empty();
             $("#collapseExample").removeClass("show");
         });
 
-        $("#video-row > iframe").attr("src", roomData.url);
+        var privateRoomData = database.ref(`/rooms/-${roomKey}`)
+        privateRoomData.on("value", function (snapshot) {
+            var databaseUrl = snapshot.val().url;
+            roomData.url = databaseUrl;
+            $("#video-row > iframe").attr("src", roomData.url);
+        });
 
         var messagesRef = database.ref(`/rooms/-${roomKey}/messages`);
 

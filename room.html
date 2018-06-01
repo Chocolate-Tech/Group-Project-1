@@ -82,7 +82,15 @@
         <div class="row" id="search-row">
             <div class="mx-auto"></div>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" id="Searchword" placeholder="Enter Searchword" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                <div class="input-group-prepend">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Choose Source</button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">YouTube Videos</a>
+                        <a class="dropdown-item" href="#">Twitch Streams</a>
+                    </div>
+                </div>
+                <input type="text" class="form-control" id="Searchword" placeholder="Enter Searchword" aria-label="Recipient's username"
+                    aria-describedby="basic-addon2">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary" id="search-button" type="button" data-toggle="collapse" data-target="#collapseExample"
                         aria-expanded="false" aria-controls="collapseExample">Search</button>
@@ -151,6 +159,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://apis.google.com/js/client.js"></script>
     <script src="assets/javascript/youtubeAPI.js"></script>
+    <script src="assets/javascript/twitchAPI.js"></script>
     <script src="assets/javascript/room.js"></script>
 </body>
 

@@ -37,16 +37,14 @@ $(document).ready(function () {
                     childData.password == account.password) {
                     loggedInUsername = childData.username;
                     storeUsername(account.username);
+                    window.location.replace("frontpage.html");
                     doesExist = true;
                 }
             });
+            if (!doesExist) {
+                $("#serverResponse").text("That username/password is incorrect!");
+            }
         });
-
-        if (!doesExist) {
-            $("#serverResponse").text("That username/password is incorrect!");
-        } 
-
-
     });
 
     $("#register-button").on("click", function (event) {
@@ -69,13 +67,12 @@ $(document).ready(function () {
             });
             if (!doesExist) {
                 ref.push(account);
-                $("#serverResponse").text("You have successfully registered! ")
+                $("#serverResponse").text("You have successfully registered! ");
+                storeUsername(account.username);
             } else {
-                $("#serverResponse").text(`The username "${account.username}" is already taken.`)
+                $("#serverResponse").text(`The username "${account.username}" is already taken.`);
             }
-
         });
-        storeUsername(account.username);
     });
 });
 
@@ -94,5 +91,4 @@ function makeRoom(username) {
 
 function storeUsername(username) {
     localStorage.setItem("username", username);
-    window.location.replace("frontpage.html");
 }

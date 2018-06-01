@@ -36,7 +36,7 @@ function loadData(roomData) {
                     hostLeft = true;
                 }
             });
-            if (hostLeft){
+            if (hostLeft) {
                 ref.remove();
             }
         });
@@ -88,10 +88,18 @@ function loadData(roomData) {
         });
 
         var privateRoomData = database.ref(`/rooms/-${roomKey}`)
-        privateRoomData.on("value", function (snapshot) {
+        privateRoomData.once("value", function (snapshot) {
             var databaseUrl = snapshot.val().url;
             roomData.url = databaseUrl;
             $("#video-row > iframe").attr("src", roomData.url);
+        });
+
+        privateRoomData.on("value", function (snapshot) {
+            var databaseUrl = snapshot.val().url;
+            if (databaseUrl != roomData.url) {
+                roomData.url = databaseUrl;
+                $("#video-row > iframe").attr("src", roomData.url);
+            }
         });
 
         var messagesRef = database.ref(`/rooms/-${roomKey}/messages`);

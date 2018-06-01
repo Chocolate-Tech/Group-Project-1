@@ -14,10 +14,7 @@ $(document).ready(function () {
     $("#lobbyButton").on("mousedown", function (event) {
         var roomKey = makeRoom(localStorage.getItem("username"));
         if (roomKey != null)
-            window.location.href = `../room.html?${roomKey}`;
-        else {
-            console.log("!Error, make message for user!");
-        }
+            window.location.href = `room.html?${roomKey}`;
     });
     $("#login-button").on("click", function (event) {
         event.preventDefault();

@@ -14,12 +14,10 @@ function callYouTubeAPI(searchWord, appendToElement) {
         "videoCaption": "closedCaption"
 
     });
-    console.log(queryURL);
     $.ajax({
         url: queryURL,
         method: "GET",
     }).then(function (response) {
-        console.log(response);
         for (item of response.items) {
             var parentDiv = $('<div class="thumbnail-preview">');
             parentDiv.attr("video-id",item.id.videoId);
